@@ -1,0 +1,613 @@
+/* ==========================================================================
+   1. GLOBAL STYLES & RESET
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f3f6f9;
+    color: #333;
+    min-height: 100vh;
+}
+
+/* Toast Message */
+#toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: #333;
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 8px;
+    z-index: 1000;
+    display: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* ==========================================================================
+   2. AUTH VIEW (LOGIN / REGISTER SCREEN) - As per Screenshot 1
+   ========================================================================== */
+#authView {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f3f6f9;
+    padding: 20px;
+}
+
+#authView > div {
+    background: #ffffff;
+    padding: 40px 35px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    max-width: 450px;
+    text-align: center;
+}
+
+/* Brand Heading */
+#authView h1 {
+    color: #4f46e5;
+    font-size: 2rem;
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+#authView p {
+    color: #718096;
+    font-size: 0.95rem;
+    margin-bottom: 30px;
+}
+
+/* Tabs Toggle (Login / Register) */
+#authView div > div {
+    display: flex;
+    background: #f1f5f9;
+    padding: 5px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+}
+
+#authView div > div button {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    background: transparent;
+    font-weight: 600;
+    color: #64748b;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+/* Tabs Active & Default State Styling */
+#authView div > div button.active {
+    background: #ffffff;
+    color: #4f46e5;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Fallback: Agar pehli baar page load ho aur active class na lagi ho */
+#tabLogin {
+    background: #ffffff;
+    color: #4f46e5;
+}
+
+/* Jab register active hoga, tab login ka background clear karne ke liye */
+#authView div > div button:not(.active) {
+    background: transparent;
+    color: #64748b;
+}
+
+/* Form Fields */
+#authView form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+#authView input, #authView select {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    outline: none;
+    color: #334155;
+    background-color: #fff;
+    transition: border-color 0.3s;
+}
+
+#authView input:focus, #authView select:focus {
+    border-color: #4f46e5;
+}
+
+/* Form Buttons */
+#authView form button {
+    background: #4f46e5;
+    color: white;
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin-top: 5px;
+}
+
+#authView form button:hover {
+    background: #4338ca;
+}
+
+#authView form p {
+    font-size: 0.85rem;
+    color: #94a3b8;
+    margin-top: 15px;
+    margin-bottom: 0;
+}
+
+/* ==========================================================================
+   3. DASHBOARD VIEW & HEADER - As per Screenshot 2
+   ========================================================================== */
+#dashView {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header {
+    background: #ffffff;
+    border-bottom: 1px solid #e2e8f0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 70px;
+    z-index: 100;
+}
+
+header > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    padding: 0 24px;
+}
+
+/* Left Brand & Sidebar Toggle */
+header div > div:first-child {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+header div > div:first-child button {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #334155;
+}
+
+header h1 {
+    color: #4f46e5;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+/* Center Search & Dropdown Matrix */
+header div > div:nth-child(2) {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+    max-width: 600px;
+    margin: 0 20px;
+}
+
+#searchBox {
+    flex: 2;
+    padding: 10px 16px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    outline: none;
+}
+
+#categoryBox {
+    flex: 1;
+    padding: 10px 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    background-color: #fff;
+    font-size: 0.9rem;
+    outline: none;
+    cursor: pointer;
+}
+
+/* Right User Profile & Logout */
+header div > div:last-child {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+#userBadge {
+    font-size: 0.85rem;
+    color: #64748b;
+    font-weight: 500;
+}
+
+header button:last-child {
+    background: #ef4444;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+header button:last-child:hover {
+    background: #dc2626;
+}
+
+/* ==========================================================================
+   4. SIDEBAR NAVIGATION (POP-UP DRAWER)
+   ========================================================================== */
+#sidebar {
+    position: fixed;
+    top: 0;
+    left: -280px;
+    width: 280px;
+    height: 100%;
+    background: #ffffff;
+    box-shadow: 4px 0 25px rgba(0,0,0,0.05);
+    z-index: 200;
+    transition: left 0.3s ease;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+#sidebar.active {
+    left: 0;
+}
+
+#sidebar > div:first-child {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+#sidebar h2 {
+    font-size: 1.3rem;
+    color: #1e293b;
+}
+
+#sidebar > div:first-child button {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: #64748b;
+}
+
+/* Sidebar Navigation Links */
+#sidebar nav {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+#sidebar nav button {
+    width: 100%;
+    text-align: left;
+    padding: 12px 16px;
+    background: none;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #475569;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+#sidebar nav button:hover {
+    background: #f1f5f9;
+    color: #4f46e5;
+    padding-left: 20px;
+}
+
+#adminMenuBtn {
+    margin-top: 20px;
+    border-top: 1px dashed #e2e8f0 !important;
+    border-radius: 0 !important;
+    padding-top: 15px !important;
+    color: #94a3b8 !important;
+}
+
+/* ==========================================================================
+   5. MAIN CONTENT AREA & FILTER BUTTONS
+   ========================================================================== */
+main {
+    margin-top: 70px;
+    padding: 40px 24px;
+    max-width: 1300px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+section {
+    display: none; /* Controlled via JS switchView */
+}
+
+/* Active Section Display Default */
+#coursesView {
+    display: block; 
+}
+
+h2 {
+    font-size: 1.75rem;
+    color: #0f172a;
+    margin-bottom: 20px;
+}
+
+/* Filter Tab Row */
+#coursesView > div:first-of-type {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 15px;
+}
+
+#coursesView > div:first-of-type button {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: #64748b;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+#coursesView > div:first-of-type button:hover {
+    border-color: #4f46e5;
+    color: #4f46e5;
+}
+
+/* Active Filter Button (Matching Screen 2) */
+#coursesView > div:first-of-type button.active,
+#filterAll {
+    background: #4f46e5;
+    color: white;
+    border-color: #4f46e5;
+}
+
+/* ==========================================================================
+   6. COURSE GRID & CARDS DESIGN
+   ========================================================================== */
+#courseGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 25px;
+}
+
+/* Dynamic Course Card Layout */
+.course-card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e2e8f0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.course-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 20px -5px rgba(0, 0, 0, 0.08);
+}
+
+/* Badges for Free / Paid */
+.badge-free {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    background: #dcfce7;
+    color: #15803d;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.badge-paid {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    background: #fef9c3;
+    color: #a16207;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.course-card h3 {
+    font-size: 1.25rem;
+    color: #1e293b;
+    margin-bottom: 8px;
+    padding-right: 60px; /* Space for badge */
+}
+
+.course-card p {
+    color: #64748b;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-bottom: 25px;
+}
+
+/* Bottom elements inside card */
+.card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #f1f5f9;
+    padding-top: 15px;
+    margin-top: auto;
+}
+
+.card-category {
+    color: #4f46e5;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.card-price {
+    font-weight: 700;
+    color: #0f172a;
+    font-size: 1rem;
+}
+
+/* ==========================================================================
+   7. LIVE CODE SIMULATOR & INTERACTIVE INTERFACE
+   ========================================================================== */
+#codeView div {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+}
+
+#codeArea {
+    width: 100%;
+    background: #1e1e2e;
+    color: #a6accd;
+    font-family: 'Courier New', Courier, monospace;
+    padding: 16px;
+    border-radius: 8px;
+    border: none;
+    font-size: 0.95rem;
+    resize: vertical;
+    outline: none;
+}
+
+#codeView button {
+    align-self: flex-start;
+    background: #10b981;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+#codeView button:hover {
+    background: #059669;
+}
+
+#codeOutput {
+    background: #0f172a;
+    color: #38bdf8;
+    padding: 15px;
+    border-radius: 8px;
+    font-family: monospace;
+    font-size: 0.9rem;
+    min-height: 80px;
+    border-left: 4px solid #0284c7;
+}
+
+/* ==========================================================================
+   8. MISC COMPONENTS (QUIZ, PROFILE, LOGS, BACK BUTTONS)
+   ========================================================================== */
+/* Generic back button for details view */
+#courseDetailView button:first-of-type {
+    background: none;
+    border: 1px solid #cbd5e1;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    color: #475569;
+    margin-bottom: 20px;
+    transition: all 0.2s;
+}
+
+#courseDetailView button:first-of-type:hover {
+    background: #f1f5f9;
+    color: #0f172a;
+}
+
+/* Card layout details */
+#courseDetailContent, #profileContent, #logsContent {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
+}
+
+/* Assessment Forms & Admin logs */
+#quizForm {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+}
+
+#settingsView button {
+    background: #dc2626;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    margin-top: 10px;
+}
+
+/* ==========================================================================
+   9. RESPONSIVE DESIGN (MOBILE MEDIA QUERIES)
+   ========================================================================== */
+@media (max-width: 768px) {
+    header div > div:nth-child(2) {
+        display: none; /* Hide main search bar on mobile headers */
+    }
+    
+    #courseGrid {
+        grid-template-columns: 1fr;
+    }
+    
+    main {
+        padding: 20px 16px;
+    }
+}

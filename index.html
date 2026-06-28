@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LearningHub - Step Up Your Learning.</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div id="toast"></div>
+
+<div id="authView">
+  <div>
+    <h1>📚 EduDash</h1>
+    <p>BCA Learning Portal</p>
+    
+    <div>
+      <button onclick="switchAuthTab('login')" id="tabLogin" type="button">Login</button>
+      <button onclick="switchAuthTab('register')" id="tabRegister" type="button">Register</button>
+    </div>
+
+    <form id="loginForm" onsubmit="handleLogin(event)">
+      <input id="loginUser" type="text" placeholder="Username" required />
+      <input id="loginPass" type="password" placeholder="Password" required />
+      <select id="loginRole">
+        <option value="student">Student</option>
+        <option value="admin">Admin</option>
+      </select>
+      <button type="submit">Login</button>
+      <p>Demo: student/1234 or admin/admin123</p>
+    </form>
+
+    <form id="registerForm" onsubmit="handleRegister(event)">
+      <input id="regName" type="text" placeholder="Full Name" required />
+      <input id="regUser" type="text" placeholder="Username" required />
+      <input id="regPass" type="password" placeholder="Password" required />
+      <button type="submit">Create Account</button>
+    </form>
+  </div>
+</div>
+
+<div id="dashView">
+  <header>
+    <div>
+      <div>
+        <button onclick="toggleSidebar()">☰</button>
+        <h1>EduDash</h1>
+      </div>
+      
+      <div>
+        <input id="searchBox" oninput="renderCourses()" type="text" placeholder="Search courses..." />
+        <select id="categoryBox" onchange="renderCourses()">
+          <option value="all">All Categories</option>
+          <option value="Programming">Programming</option>
+          <option value="Web">Web Development</option>
+          <option value="Database">Database</option>
+          <option value="AI">AI / ML</option>
+        </select>
+      </div>
+
+      <div>
+        <span id="userBadge"></span>
+        <button onclick="handleLogout()">Logout</button>
+      </div>
+    </div>
+  </header>
+
+  <aside id="sidebar">
+    <div>
+      <h2>Menu</h2>
+      <button onclick="toggleSidebar()">✕</button>
+    </div>
+    <nav>
+      <button onclick="showView('coursesView'); toggleSidebar()">📘 Courses</button>
+      <button onclick="showView('profileView'); toggleSidebar()">👤 Profile</button>
+      <button onclick="showView('quizView'); toggleSidebar()">📝 Interactive Quiz</button>
+      <button onclick="showView('codeView'); toggleSidebar()">💻 Code Simulator</button>
+      <button onclick="showView('settingsView'); toggleSidebar()">⚙️ Settings</button>
+      <button id="adminMenuBtn" onclick="showView('logsView'); renderLogs(); toggleSidebar()">🗄️ Admin Logs (DB View)</button>
+    </nav>
+  </aside>
+
+  <main>
+    <section id="coursesView">
+      <h2>Available Courses</h2>
+      <div>
+        <button onclick="setFilter('all')" id="filterAll">All</button>
+        <button onclick="setFilter('free')" id="filterFree">Free</button>
+        <button onclick="setFilter('paid')" id="filterPaid">Paid</button>
+      </div>
+      <div id="courseGrid"></div>
+    </section>
+
+    <section id="courseDetailView">
+      <button onclick="showView('coursesView')">← Back to Courses</button>
+      <div id="courseDetailContent"></div>
+    </section>
+
+    <section id="profileView">
+      <h2>My Profile</h2>
+      <div id="profileContent"></div>
+    </section>
+
+    <section id="quizView">
+      <h2>MCQ Assessment Test</h2>
+      <form id="quizForm" onsubmit="submitQuiz(event)"></form>
+    </section>
+
+    <section id="codeView">
+      <h2>Code Practical Simulator</h2>
+      <div>
+        <textarea id="codeArea" rows="10" placeholder="// Write code here..."></textarea>
+        <button onclick="runCode()">▶ Run Compilation Test</button>
+        <div id="codeOutput">Output log window...</div>
+      </div>
+    </section>
+
+    <section id="settingsView">
+      <h2>Settings</h2>
+      <div>
+        <p>Clear Local DB instance state:</p>
+        <button onclick="resetDB()">Reset Storage Matrix</button>
+      </div>
+    </section>
+
+    <section id="logsView">
+      <h2>🗄️ Admin System Logs (Database Record Representation)</h2>
+      <div id="logsContent"></div>
+    </section>
+  </main>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
